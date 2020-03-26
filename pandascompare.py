@@ -1,7 +1,7 @@
 import pandas as pd 
 
 df1 = pd.read_csv("E:\AI-ML\datasets\\testdata.csv")
-df2 = pd.read_csv("E:\AI-ML\datasets\\testdata1.csv")
+df2 = pd.read_csv("E:\AI-ML\datasets\\testdata1.csv",names=["id","first_name","last_name","email","gender"])
 
 # Sort data frames by columns
 df1=df1.sort_values('last_name')
@@ -30,19 +30,21 @@ for column in df1.columns[1:]:
 # print(df1.count())
 # print(len(df2))
 
-# def dataframe_difference(df1, df2, which=None):
-#     """Find rows which are different between two DataFrames."""
-#     comparison_df = df1.merge(df2,
-#                               indicator=True,
-#                               how='outer')
-#     if which is None:
-#         diff_df = comparison_df[comparison_df['_merge'] != 'both']
-#     else:
-#         diff_df = comparison_df[comparison_df['_merge'] == which]
-#     diff_df.to_csv('data/diff.csv')
-#     return diff_df
+print("*****df1 column types***: \n",df1.dtypes)
+print("*****df2 column types***: \n",df2.dtypes)
+def dataframe_difference(df1, df2, which=None):
+    """Find rows which are different between two DataFrames."""
+    comparison_df = df1.merge(df2,
+                              indicator=True,
+                              how='outer')
+    if which is None:
+        diff_df = comparison_df[comparison_df['_merge'] != 'both']
+    else:
+        diff_df = comparison_df[comparison_df['_merge'] == which]
+    diff_df.to_csv('data/diff.csv')
+    return diff_df
 
-# dataframe_difference(df1, df2,'right_only')
+dataframe_difference(df1, df2)
 
 # def get_different_rows(source_df, new_df):
 #     """Returns just the rows from the new dataframe that differ from the source dataframe"""
